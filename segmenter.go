@@ -68,7 +68,13 @@ func (seg *Segmenter) LoadDictionary(files string) {
 				continue
 			}
 
-			seg.AddDictionary(text, freqText, pos)
+			// 解析词频
+			frequency, err := strconv.Atoi(freqText)
+			if err != nil {
+				continue
+			}
+
+			seg.AddDictionary(text, pos, frequency)
 		}
 	}
 	seg.RefreshDictionary()
@@ -254,24 +260,16 @@ func toLower(text []byte) []byte {
 }
 
 //添加字典
-func (seg *Segmenter) AddDictionary(text, freqText, pos string) {
-	var frequency int
+func (seg *Segmenter) AddDictionary(text, pos string, frequency int) {
 
 	//无效字典
-	if len(text) == 0 || len(freqText) == 0 {
+	if len(text) == 0 {
 		return
 	}
 
 	//没有词性标注时设为空字符串
 	if len(pos) == 0 {
 		pos = ""
-	}
-
-	// 解析词频
-	var err error
-	frequency, err = strconv.Atoi(freqText)
-	if err != nil {
-		return
 	}
 
 	// 过滤频率太小的词
