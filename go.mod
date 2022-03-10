@@ -1,4 +1,4 @@
-module github.com/huichen/sego
+module github.com/ChinaDagger/sego
 
 go 1.16
 
