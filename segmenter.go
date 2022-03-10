@@ -261,7 +261,9 @@ func toLower(text []byte) []byte {
 
 //添加字典
 func (seg *Segmenter) AddDictionary(text, pos string, frequency int) {
-
+	if seg.dict == nil {
+		seg.dict = NewDictionary()
+	}
 	//无效字典
 	if len(text) == 0 {
 		return
